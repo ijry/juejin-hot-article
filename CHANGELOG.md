@@ -15,6 +15,11 @@ All notable changes to this project are documented here. Format follows [Keep a 
 - `scripts/validate_skill.py` and a GitHub Actions workflow that validates frontmatter, file references, script syntax and CSV integrity on every push.
 - `examples/`: a real-data demo draft, prompt cookbook and cover asset.
 
+### Verified
+- `npx skills add ijry/juejin-hot-article --list -y` discovers 1 skill; `-a codex -y --copy` installs it to `.agents/skills/juejin-hot-article/`.
+- `install.sh` installs to all three client targets; Codex / Claude Code copies stay spec-clean while the WorkBuddy copy receives the `agent_created` shim.
+- `python scripts/validate_skill.py`: 41 checks passed, 0 errors. `examples/draft.md` scores 98/100. GitHub Actions `validate` workflow passes on push.
+
 ### Notes
 - All numbers are a single snapshot taken at 2026-11-06 08:55 (UTC+8). Platform algorithms may change; rerun the fetch/analyze chain to refresh.
 - The heat formula is an empirical fit, not an official platform disclosure.

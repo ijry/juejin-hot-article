@@ -44,7 +44,17 @@ npx skills add ijry/juejin-hot-article --skill juejin-hot-article -a codex
 npx skills add ijry/juejin-hot-article --skill juejin-hot-article -a claude-code
 ```
 
-默认安装到当前项目目录；如需全局安装，请按 CLI 的交互提示选择 global scope（或查看 `npx skills add --help`）。
+默认安装到当前项目目录。常用参数：`-g` 全局安装、`-y` 跳过确认、`--list` 只列出不安装、`--copy` 复制文件而非软链接。
+
+```bash
+# 全局、非交互安装（复制文件）
+npx skills add ijry/juejin-hot-article -s juejin-hot-article -a codex -g -y --copy
+
+# 只读检查：列出仓库里的技能，不写入任何文件
+npx skills add ijry/juejin-hot-article --list -y
+```
+
+> 实测（2026-11-06）：`--list` 返回 `Found 1 skill`；带 `-a codex -y --copy` 的安装输出 `copy → Codex`，技能落盘到 `.agents/skills/juejin-hot-article/SKILL.md`。
 
 ### 方式二：Codex 内置安装器
 
