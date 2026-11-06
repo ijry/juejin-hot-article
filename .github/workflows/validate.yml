@@ -1,0 +1,45 @@
+name: validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Validate the Agent Skills distribution
+        run: python scripts/validate_skill.py
+
+      - name: Compile every shipped Python script
+        run: python -m py_compile skills/juejin-hot-article/scripts/*.py scripts/validate_skill.py
+
+      - name: Score the demo draft
+        run: python skills/juejin-hot-article/scripts/score_article.py examples/draft.md
+
+      - name: Check installer syntax and planned targets
+        run: |
+          bash -n install.sh
+          bash install.sh --scope project --agent all --dry-run
+
+      - name: Smoke-test a real project-scope install
+        run: |
+          tmp="$(mktemp -d)"
+          cd "$tmp"
+          bash "$GITHUB_WORKSPACE/install.sh" --scope project --agent codex --force
+          test -f "$tmp/.agents/skills/juejin-hot-article/SKILL.md"
+          python "$tmp/.agents/skills/juejin-hot-article/scripts/score_article.py" \
+            "$GITHUB_WORKSPACE/examples/draft.md" --json

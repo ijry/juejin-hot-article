@@ -1,0 +1,7 @@
+interface:
+  display_name: "掘金高热文章"
+  short_description: "写更可能上掘金热榜的中文技术文章：选题、标题、骨架、发布配置与发前打分"
+  default_prompt: "用 juejin-hot-article 帮我写一篇关于（在这里填主题）的掘金文章，先给 8 个标题候选并逐个打分"
+
+policy:
+  allow_implicit_invocation: true
